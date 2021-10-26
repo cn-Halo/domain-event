@@ -1,1 +1,3 @@
-# domain-event
+# 事务性发件箱
+
+## 轮训事务性发件箱来实现。publisher保证事件至少投递成功一次。同一个application则认为事件重放成功，则投递成功。
