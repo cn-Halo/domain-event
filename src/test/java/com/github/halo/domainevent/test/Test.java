@@ -27,7 +27,7 @@ public class Test {
         ResultWithDomainEvents result = Order.createOrder("123");
         Order order = (Order) result.result();
         orderRepository.save(order);
-        outboxService.publish(order.getId(), order.getClass(), result.events());
+        outboxService.persist(order.getId(), order.getClass(), result.events());
     }
 
 

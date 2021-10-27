@@ -23,6 +23,7 @@ public class OutboxService {
     @Autowired
     private OutboxRepository outboxRepository;
 
+    public static Object blockObject = new Object();
 
     /**
      * 事件重放
@@ -56,7 +57,7 @@ public class OutboxService {
      * @param domainEvents
      */
     @Transactional(propagation = Propagation.MANDATORY)
-    public void publish(Long aggregateId, Class aggregateType, List<DomainEvent> domainEvents) {
+    public void persist(Long aggregateId, Class aggregateType, List<DomainEvent> domainEvents) {
         List<Outbox> outboxes = new ArrayList<>();
         for (DomainEvent domainEvent : domainEvents) {
             OutboxDto outboxDto = new OutboxDto();
@@ -69,6 +70,9 @@ public class OutboxService {
             outboxes.add(Outbox.create(outboxDto));
         }
         outboxRepository.saveAll(outboxes);
+        synchronized (blockObject) {
+            blockObject.notifyAll();
+        }
     }
 
 }
