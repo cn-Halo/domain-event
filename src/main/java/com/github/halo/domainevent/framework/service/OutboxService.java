@@ -7,6 +7,7 @@ import com.github.halo.domainevent.framework.entity.Outbox;
 import com.github.halo.domainevent.framework.repository.OutboxRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -23,6 +24,12 @@ public class OutboxService {
     private OutboxRepository outboxRepository;
 
 
+    /**
+     * 事件重放
+     *
+     * @return
+     * @throws Exception
+     */
     @Transactional
     public List<DomainEvent> replay() throws Exception {
         List<Outbox> outboxes = outboxRepository.findByPublished("N");
@@ -41,6 +48,14 @@ public class OutboxService {
         return domainEvents;
     }
 
+    /**
+     * 支持当前事务，如果当前没有事务，就抛出异常。
+     *
+     * @param aggregateId
+     * @param aggregateType
+     * @param domainEvents
+     */
+    @Transactional(propagation = Propagation.MANDATORY)
     public void publish(Long aggregateId, Class aggregateType, List<DomainEvent> domainEvents) {
         List<Outbox> outboxes = new ArrayList<>();
         for (DomainEvent domainEvent : domainEvents) {

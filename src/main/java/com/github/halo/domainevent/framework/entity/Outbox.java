@@ -5,12 +5,11 @@ import com.alibaba.fastjson.JSON;
 import com.github.halo.domainevent.framework.AggregateRoot;
 import com.github.halo.domainevent.framework.DomainEvent;
 import com.github.halo.domainevent.framework.dto.OutboxDto;
+import com.github.halo.domainevent.framework.service.OutboxListener;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.lang.reflect.Constructor;
 
 /**
@@ -19,7 +18,9 @@ import java.lang.reflect.Constructor;
  * 事务性发件箱
  */
 @Data
-@Entity(name = "T_Outbox")
+@Entity
+@Table(name = "T_Outbox")
+@EntityListeners(OutboxListener.class)
 public class Outbox {
 
     @Id
@@ -45,12 +46,17 @@ public class Outbox {
         return outbox;
     }
 
-
+    /**
+     * 事件重放
+     *
+     * @return
+     * @throws Exception
+     */
     public DomainEvent replay() throws Exception {
         Class<AggregateRoot> aClass = (Class<AggregateRoot>) Class.forName(this.getEntityType());
         AggregateRoot aggregateRoot = JSON.parseObject(this.getEventData(), aClass);
 
-        Constructor c = Class.forName(this.getEventType()).getDeclaredConstructor(AggregateRoot.class);
+        Constructor c = Class.forName(this.getEventType()).getDeclaredConstructor(aClass);
         DomainEvent domainEvent = (DomainEvent) c.newInstance(aggregateRoot);
         return domainEvent;
     }

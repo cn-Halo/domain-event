@@ -1,12 +1,12 @@
 package com.github.halo.domainevent.framework;
 
-import java.util.EventObject;
+import org.springframework.context.ApplicationEvent;
 
 /**
  * @author yzm
  * @date 2021/10/23 17:31
  */
-public class DomainEvent<A extends AggregateRoot> extends EventObject {
+public class DomainEvent<A extends AggregateRoot> extends ApplicationEvent {
 
     /**
      * Constructs a prototypical Event.
