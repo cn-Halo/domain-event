@@ -22,9 +22,9 @@ public class Order implements AggregateRoot {
     private String orderNo;
 
 
-    public static ResultWithDomainEvents<Order,OrderCreateEvent> createOrder(String orderNo) {
+    public static ResultWithDomainEvents<Order, OrderCreateEvent> createOrder(String orderNo) {
         Order order = new Order();
         order.setOrderNo(orderNo);
-        return new ResultWithDomainEvents<>(order, Collections.singletonList(new OrderCreateEvent(order)));
+        return new ResultWithDomainEvents(order, Collections.singletonList(OrderCreateEvent.of(OrderCreateEvent.class, order)));
     }
 }

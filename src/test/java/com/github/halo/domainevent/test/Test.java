@@ -27,7 +27,7 @@ public class Test {
         ResultWithDomainEvents result = Order.createOrder("123");
         Order order = (Order) result.result();
         orderRepository.save(order);
-//        eventBus.file(order.getId(), order.getClass(), result.events());
+        eventBus.fire(result.events());
     }
 
 

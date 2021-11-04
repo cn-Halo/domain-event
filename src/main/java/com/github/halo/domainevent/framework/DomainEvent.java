@@ -20,7 +20,7 @@ public class DomainEvent {
     private String eventData;
     private String eventId;
 
-    protected final static DomainEvent of(Class<DomainEvent> eventType, AggregateRoot aggregateRoot) {
+    public final static DomainEvent of(Class eventType, AggregateRoot aggregateRoot) {
         DomainEvent domainEvent = new DomainEvent();
         domainEvent.setAggregateId(String.valueOf(aggregateRoot.getId()));
         domainEvent.setAggregateType(aggregateRoot.getClass().getName());

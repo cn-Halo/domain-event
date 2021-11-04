@@ -1,6 +1,7 @@
 package com.github.halo.domainevent.framework.outbox;
 
 import com.github.halo.domainevent.framework.DomainEvent;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
  * @date 2021/11/3 22:14
  * 事件总线
  */
-
+@Component
 public class EventBus {
 
     private OutboxRepository outboxRepository;
