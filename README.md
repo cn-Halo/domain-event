@@ -18,4 +18,6 @@
 ### 事件发布器 DomainEventPublisherManager
 - 管理一组发布器，默认使用Spring事件发布器。
 
+## 使用
+- 见test
  
