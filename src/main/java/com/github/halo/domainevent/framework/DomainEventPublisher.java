@@ -9,7 +9,5 @@ import java.util.List;
  */
 public interface DomainEventPublisher {
 
-//    void publish(Class aggregateType, Object aggregateId, List<DomainEvent> domainEvents);
-
     void publish(List<DomainEvent> domainEvents);
 }

@@ -1,7 +1,8 @@
 package com.github.halo.domainevent.test;
 
-import com.github.halo.domainevent.framework.service.LoopQueryRelay;
-import com.github.halo.domainevent.framework.service.OutboxService;
+import com.github.halo.domainevent.framework.DomainEventPublisherManager;
+import com.github.halo.domainevent.framework.outbox.EventBus;
+import com.github.halo.domainevent.framework.relay.LoopQueryRelay;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 public class Config {
 
     @Bean
-    public LoopQueryRelay getLoopQueryRelay(OutboxService outboxService) {
-        return new LoopQueryRelay(outboxService);
+    public LoopQueryRelay getLoopQueryRelay(EventBus eventBus, DomainEventPublisherManager domainEventPublisherManager) {
+        return new LoopQueryRelay(eventBus, domainEventPublisherManager);
     }
 }

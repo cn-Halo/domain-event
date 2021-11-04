@@ -10,4 +10,7 @@ package com.github.halo.domainevent.framework;
 public interface AggregateRoot {
 
 
+    Object getId();
+
+
 }

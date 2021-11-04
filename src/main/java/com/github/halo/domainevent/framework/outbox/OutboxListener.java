@@ -1,4 +1,4 @@
-package com.github.halo.domainevent.framework.service;
+package com.github.halo.domainevent.framework.outbox;
 
 import javax.persistence.*;
 
