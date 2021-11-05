@@ -20,4 +20,9 @@
 
 ## 使用
 - 见test
+
+
+## 参考/推荐
+- https://debezium.io/blog/
+- https://microservices.io/patterns/cn/index.html
  

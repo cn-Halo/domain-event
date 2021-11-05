@@ -37,9 +37,8 @@ public class LoopQueryRelay implements EventRelay {
                         eventBus.blockObject.wait();
                     }
                     List<DomainEvent> domainEvents = eventBus.lookup();
-                    //todo wait on outbox process
                     domainEventPublisherManager.publish(domainEvents);
-//                    eventBus.eventPublished(domainEvents);
+                    eventBus.eventPublished(domainEvents);
 
                 } catch (Exception e) {
                     e.printStackTrace();
